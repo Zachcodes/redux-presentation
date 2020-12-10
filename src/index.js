@@ -6,6 +6,8 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
+// The Provider component takes the initial store and wraps our top level component
+// This pattern is critical to React/Redux and allows our nested components anywhere in the tree to use the global store state
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -15,7 +17,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

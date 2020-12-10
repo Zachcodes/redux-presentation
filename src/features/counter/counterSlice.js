@@ -1,3 +1,5 @@
+// createSlice is another helpful utility function that handles the tedious actions of creating 
+// our reducer functions, actions and initializing the state
 import { createSlice } from '@reduxjs/toolkit';
 
 export const counterSlice = createSlice({
@@ -5,12 +7,11 @@ export const counterSlice = createSlice({
   initialState: {
     value: 0,
   },
+  // although it looks to be violating one of Redux's 3 principles by manipulating the input state,
+  // createSlice uses the library immer to wrap each function and pass a draft state. We can safely 
+  // manipulate the input, and a copy of the state is safely returned behind the scenes
   reducers: {
     increment: state => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
       state.value += 1;
     },
     decrement: state => {
@@ -21,6 +22,17 @@ export const counterSlice = createSlice({
     },
   },
 });
+
+// A reducer function signature is (state, action) => payload
+// a typical reducer function not created by createSlice looks like
+// function myReducer(state = initialState, action) {
+//   switch(action.type) {
+//     case 'MY_ACTION':
+//       return {...state, number: state.number + 1}
+//     default: 
+//       return state;
+//   }
+// }
 
 export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 
@@ -34,9 +46,6 @@ export const incrementAsync = amount => dispatch => {
   }, 1000);
 };
 
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state) => state.counter.value)`
 export const selectCount = state => state.counter.value;
 
 export default counterSlice.reducer;
